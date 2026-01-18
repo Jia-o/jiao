@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your Name | Personal Website</title>
+  <title>Jiao Deng | Personal Website</title>
   <style>
-    /* Reset & base styles */
     * {
       margin: 0;
       padding: 0;
@@ -19,13 +18,18 @@
       background: linear-gradient(180deg, #f6f2ff, #fff6f8);
     }
 
-    /* Layout */
     .container {
       max-width: 900px;
       margin: 0 auto;
       padding: 3rem 1.5rem 4rem;
     }
 
+    nav a {
+      color: #5f5bd6;
+      text-decoration: none;
+      margin: 0 6px;
+    }
+  
     header {
       margin-bottom: 3.5rem;
       padding: 2.5rem 2rem;
@@ -60,7 +64,6 @@
       font-weight: 500;
     }
 
-    /* About section */
     .about p {
       font-size: 1.05rem;
       color: #4a4a4a;
@@ -137,6 +140,21 @@
       opacity: 0.6;
     }
 
+    section ul {
+      padding-left: 2.4rem;
+    }
+
+    .awards-wrapper {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .awards-column {
+      flex: 1;
+      min-width: 240px;
+    }
+
     footer {
       text-align: center;
       font-size: 0.9rem;
@@ -145,6 +163,7 @@
     }
   </style>
 </head>
+
 <body>
   <nav>
     <a href="index.html">Home</a> |
@@ -152,24 +171,86 @@
   </nav>
   <div class="container">
     <header>
-      <h1>Your Name</h1>
-      <p>Short tagline or role (e.g., Student • Developer • Designer)</p>
+      <h1>Jiao Deng</h1>
+      <p>Student</p>
+      <p>
+        <a href="mailto:jiaod@andrew.cmu.edu">jiaod@andrew.cmu.edu</a> |
+        <a href="https://www.linkedin.com/in/jiaodeng247/">LinkedIn</a>
+      </p>
     </header>
 
     <section class="about">
       <h2>About Me</h2>
       <p>
-        Write a brief introduction about yourself here. You can mention your
-        interests, what you’re currently learning or working on, and what you’re
-        passionate about.
+        I’m a Cognitive Science major at Carnegie Mellon University graduating in 2028. 
+      </p>
+    </section>
+    
+    <section>
+      <h2>Experience</h2>
+
+      <h3>Computer Science Teaching Assistant — CMU</h3>
+      <p><em>June 2025 – Present</em></p>
+      <ul>
+        <li>Created educational content and supported students on large coding projects</li>
+      </ul>
+
+      <h3>Product Design Intern — Vinora AI</h3>
+      <p><em>Dec 2024 – Apr 2025</em></p>
+      <ul>
+        <li>Built user interface using JavaScript and Python for AI workflow visualization</li>
+      </ul>
+
+      <h3>Data Analyst — Baker Industries</h3>
+      <p><em>Oct 2024 – Apr 2025</em></p>
+      <ul>
+        <li>Analyzed survey data with Python and R to evaluate rehabilitation programs</li>
+      </ul>
+
+      <h3>Nanotechnology Developer — Stanford Department of Psychology</h3>
+      <p><em>Aug 2023 – Aug 2024</em></p>
+      <ul>
+        <li>Prototyped nanobots for opioid relapse detection</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Selected Projects</h2>
+      <ul>
+        <li><strong>X-Ray Image Classification:</strong> CNN with PyTorch to detect lung conditions</li>
+        <li><strong>Hand-Controlled Mario:</strong> OpenCV and Mediapipe accessibility game interface</li>
+        <li><strong>LLM Resource Calculator:</strong> Sustainability browser extension (TartanHacks winner)</li>
+        <li><strong>Cancer Gene Sequencer:</strong> DNA mutation analysis with Python and Matplotlib</li>
+      </ul>
+      <p style="margin-top:1rem;">
+        <a href="projects.html">View detailed projects →</a>
       </p>
     </section>
 
     <section>
-      <h2>Projects</h2>
-      <p>
-        <a href="projects.html">View my projects →</a>
-      </p>
+      <h2>Awards</h2>
+
+      <div class="awards-wrapper">
+
+        <div class="awards-column">
+          <h3>High School</h3>
+          <ul>
+            <li>Award 1</li>
+            <li>Award 2</li>
+            <li>Award 3</li>
+          </ul>
+        </div>
+
+        <div class="awards-column">
+          <h3>University</h3>
+          <ul>
+            <li>Award A</li>
+            <li>Award B</li>
+            <li>Award C</li>
+          </ul>
+        </div>
+
+      </div>
     </section>
 
     <footer>
