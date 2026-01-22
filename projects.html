@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projects | Your Name</title>
+  <title>Projects</title>
 
   <style>
     * {
@@ -12,11 +12,26 @@
       box-sizing: border-box;
     }
 
+    /* --- Animated background layer --- */
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: linear-gradient(
+        to bottom,
+        #ffb347 0%,
+        #ff7e5f 40%,
+        #d66d75 70%,
+        #5f2c82 100%
+      );
+    }
+
     body {
       font-family: "Segoe UI", system-ui, sans-serif;
       line-height: 1.7;
       color: #3b3b3b;
-      background: linear-gradient(180deg, #f6f2ff, #fff6f8);
+      background: transparent;
     }
 
     .container {
@@ -25,10 +40,16 @@
       padding: 3rem 1.5rem 4rem;
     }
 
+    nav a {
+      color: #5f5bd6;
+      text-decoration: none;
+      margin: 0 6px;
+    }
+
     header {
       margin-bottom: 3.5rem;
       padding: 2.5rem 2rem;
-      background: #ffffffcc;
+      background: rgba(255, 255, 255, 0.85); /* semi-transparent */
       border-radius: 32px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
       backdrop-filter: blur(6px);
@@ -47,7 +68,7 @@
 
     section {
       margin-bottom: 3rem;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.85); /* semi-transparent */
       padding: 2.5rem 2rem;
       border-radius: 28px;
       box-shadow: 0 18px 36px rgba(0, 0, 0, 0.05);
@@ -58,6 +79,7 @@
       margin-bottom: 1.2rem;
       font-weight: 500;
     }
+
     .video-container {
       max-width: 100%;
       aspect-ratio: 16/9;
@@ -92,14 +114,17 @@
     .project-card {
       border-radius: 26px;
       padding: 1.75rem 1.5rem;
-      background: linear-gradient(180deg, #f1ecff, #ffeef4);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
+      background: rgba(255, 255, 255, 0.85);
+      /* Stronger shadow for pronounced outline */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), /* subtle core shadow */
+                  0 16px 40px rgba(0, 0, 0, 0.1);  /* larger diffuse shadow */
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .project-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2),   /* stronger on hover */
+                  0 24px 60px rgba(0, 0, 0, 0.15);
     }
 
     .project-card h3 {
@@ -117,17 +142,28 @@
     .project-card a {
       display: inline-block;
       padding: 0.5rem 1.1rem;
-      border-radius: 999px;
+      border-radius: 999px; /* pill shape */
       font-size: 0.9rem;
       color: #5f5bd6;
       background-color: #ffffff;
       text-decoration: none;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+
+      /* main shadow on top/right, subtle shadow on left/bottom */
+      box-shadow: 
+          4px -4px 15px rgba(0, 0, 0, 0.25),  /* top/right */
+          -2px 2px 5px rgba(0, 0, 0, 0.1);    /* left/bottom subtle */
+
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .project-card a:hover {
       background-color: #f5f3ff;
+      transform: translateY(-2px);
+      box-shadow: 
+          6px -6px 20px rgba(0, 0, 0, 0.3),  /* top/right stronger on hover */
+          -2px 2px 5px rgba(0, 0, 0, 0.12);  /* left/bottom subtle */
     }
+
 
     .project-summary {
       transition: opacity 0.3s ease;
@@ -157,18 +193,20 @@
       margin-top: 3rem;
     }
   </style>
-  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="projects.html">Projects</a>
-    </nav>
-  <div class="container">
+  <!-- Sunset background -->
+  <div class="background"></div>
 
+  <nav>
+    <a href="index.html">Home</a> |
+    <a href="projects.html">Projects</a>
+  </nav>
+
+  <div class="container">
     <header>
-      <h1>Projects</h1>
+      <h1>Projects Portfolio</h1>
       <p><a href="index.html">← Back to Home</a></p>
     </header>
 
@@ -183,12 +221,8 @@
             AI agent that fills out hospital intake forms by scraping patient conversations.
           </p>
           <div class="project-details">
-            <p>
-              Languages: python, javascript 
-            </p>
-            <p>
-              Tools: React, Livekit, FastAPI
-            </p>
+            <p>Languages: python, javascript</p>
+            <p>Tools: React, Livekit, FastAPI</p>
             <a href="https://drive.google.com/file/d/1H9XvAJrENKKjjgALItrS-l0XUYbZAU0R/view">View Project</a>
           </div>
         </div>
@@ -199,73 +233,31 @@
             CNN that detects and classifies lung conditions from pulmonary XRay images.
           </p>
           <div class="project-details">
-            <p>
-              Languages: python
-            </p>
-            <p>
-              Tools: Pytorch
-            </p>
+            <p>Languages: python</p>
+            <p>Tools: Pytorch</p>
             <a href="https://drive.google.com/file/d/1T-IKO5k4cQafeBPQRJchuDEd2FEDKUcY/view">View Project</a>
           </div>
         </div>
-        
+
         <div class="project-card" onclick="this.classList.toggle('open')">
           <h3>LLM Calculator</h3>
           <p class="project-summary">
             Browser extension that calculates and visualizes the real-time environmental impacts of LLM usage.
           </p>
           <div class="project-details">
-            <p>
-              Languages: python, javascript 
-            </p>
+            <p>Languages: python, javascript</p>
             <a href="https://drive.google.com/file/d/1H9XvAJrENKKjjgALItrS-l0XUYbZAU0R/view">View Project</a>
           </div>
-        </div>        
-        
+        </div>
+
         <div class="project-card" onclick="this.classList.toggle('open')">
           <h3>Hand-controlled Video Game</h3>
           <p class="project-summary">
             Mario-esque game controlled by hand movements.
           </p>
           <div class="project-details">
-            <p>
-              Languages: python 
-            </p>
-            <p>
-              Tools: Mediapipe, OpenCV
-            </p>
-            <a href="https://drive.google.com/file/d/1H9XvAJrENKKjjgALItrS-l0XUYbZAU0R/view">View Project</a>
-          </div>
-        </div>
-        
-        <div class="project-card" onclick="this.classList.toggle('open')">
-          <h3>Intake Form</h3>
-          <p class="project-summary">
-            AI agent that fills out hospital intake forms by scraping patient conversations.
-          </p>
-          <div class="project-details">
-            <p>
-              Languages: python, javascript 
-            </p>
-            <p>
-              Tools: React, Livekit, FastAPI
-            </p>
-            <a href="https://drive.google.com/file/d/1H9XvAJrENKKjjgALItrS-l0XUYbZAU0R/view">View Project</a>
-          </div>
-        </div>
-        
-        <div class="project-card" onclick="this.classList.toggle('open')">
-          <h3>Intake Form</h3>
-          <p class="project-summary">
-            AI agent that fills out hospital intake forms by scraping patient conversations.
-          </p>
-          <div class="project-details">
-            <p>
-              Languages: python, javascript 
-            </p>
-            <p>
-              Tools: React, Livekit, FastAPI
-            </p>
+            <p>Languages: python</p>
+            <p>Tools: Mediapipe, OpenCV</p>
             <a href="https://drive.google.com/file/d/1H9XvAJrENKKjjgALItrS-l0XUYbZAU0R/view">View Project</a>
           </div>
         </div>

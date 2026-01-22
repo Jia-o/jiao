@@ -11,11 +11,85 @@
       box-sizing: border-box;
     }
 
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      background: linear-gradient(
+        to bottom,
+        #ffb347 0%,
+        #ff7e5f 40%,
+        #d66d75 70%,
+        #5f2c82 100%
+      );
+    }
+
+    .plane {
+      position: absolute;
+      top: 40%;
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-left: 90px solid #f5f5f5;
+      filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.25));
+      animation: fly 10s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .plane::after {
+      content: "";
+      position: absolute;
+      top: -18px;
+      left: -90px;
+      width: 0;
+      height: 0;
+      border-top: 18px solid transparent;
+      border-bottom: 18px solid transparent;
+      border-left: 45px solid #e0e0e0;
+    }
+
+    @keyframes fly {
+      0% {
+        left: -200px;
+        transform: scaleX(1) translateY(0) rotate(6deg);
+      }
+      40% {
+        left: calc(100% + 200px);
+        transform: scaleX(1) translateY(-40px) rotate(-6deg);
+      }
+      50% {
+        left: calc(100% + 200px);
+        transform: scaleX(-1);
+      }
+      90% {
+        left: -200px;
+        transform: scaleX(-1) translateY(20px) rotate(6deg);
+      }
+      100% {
+        left: -200px;
+        transform: scaleX(1) translateY(0) rotate(6deg);
+      }
+    }
+
+    .horizon {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 25%;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.35),
+        transparent
+      );
+    }
+
     body {
       font-family: "Segoe UI", system-ui, sans-serif;
       line-height: 1.7;
       color: #3b3b3b;
-      background: linear-gradient(180deg, #f6f2ff, #fff6f8);
+      background: transparent;
     }
 
     .container {
@@ -29,30 +103,35 @@
       text-decoration: none;
       margin: 0 6px;
     }
-  
+    
     header {
       margin-bottom: 3.5rem;
       padding: 2.5rem 2rem;
-      background: #ffffffcc;
+      background: rgba(255, 255, 255, 0.85);
       border-radius: 32px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
       backdrop-filter: blur(6px);
-    }
 
+      /* Center the content */
+      text-align: center;
+    }
     header h1 {
-      font-size: 2.6rem;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 2.6rem; /* original size */
       margin-bottom: 0.75rem;
       font-weight: 500;
     }
 
     header p {
-      font-size: 1.1rem;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      font-size: 1.1rem; /* original size */
       color: #777;
     }
 
+
     section {
       margin-bottom: 3rem;
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.85);
       padding: 2.5rem 2rem;
       border-radius: 28px;
       box-shadow: 0 18px 36px rgba(0, 0, 0, 0.05);
@@ -70,7 +149,6 @@
       max-width: 70ch;
     }
 
-    /* Projects section */
     .projects-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -81,7 +159,7 @@
     .project-card {
       border-radius: 26px;
       padding: 1.75rem 1.5rem;
-      background: linear-gradient(180deg, #f1ecff, #ffeef4);
+      background: rgba(255, 255, 255, 0.85);
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
@@ -118,7 +196,6 @@
       background-color: #f5f3ff;
     }
 
-    /* Interactive reveal styles */
     .project-summary {
       transition: opacity 0.3s ease;
     }
@@ -165,14 +242,22 @@
 </head>
 
 <body>
+
+  <div class="background">
+    <div class="plane"></div>
+    <div class="horizon"></div>
+  </div>
+
+  <!-- Navigation -->
   <nav>
     <a href="index.html">Home</a> |
     <a href="projects.html">Projects</a>
   </nav>
+
+  <!-- Main container -->
   <div class="container">
     <header>
       <h1>Jiao Deng</h1>
-      <p>Student</p>
       <p>
         <a href="mailto:jiaod@andrew.cmu.edu">jiaod@andrew.cmu.edu</a> |
         <a href="https://www.linkedin.com/in/jiaodeng247/">LinkedIn</a>
@@ -182,7 +267,15 @@
     <section class="about">
       <h2>About Me</h2>
       <p>
-        I’m a Cognitive Science major at Carnegie Mellon University graduating in 2028. 
+        I’m a Cognitive Science major at Carnegie Mellon University graduating in 2028. My projects have:
+      </p>
+      <ul>
+        <li>Received Berkeley StEP ($10k) and Microsoft for AI ($20k) grants</li>
+        <li>Won the Most Significant Sustainability Innovation Award at Tartanhacks</li>
+        <li>Been adopted into 5+ hospitals and helplines around North America</li>
+      </ul>
+      <p style="margin-top:1rem;">
+        <a href="projects.html">View full projects portfolio →</a>
       </p>
     </section>
     
@@ -215,25 +308,12 @@
     </section>
 
     <section>
-      <h2>My projects have:</h2>
-      <ul>
-        <li>Recieved Berkeley StEP ($10k) and Microsoft for AI ($20k) grants</li>
-        <li>Won the Most Significant Sustainability Innovation Award at Tartanhacks</li>
-        <li>Been adopted into 5+ hospitals and helplines around North America</li>
-      </ul>
-      <p style="margin-top:1rem;">
-        <a href="projects.html">View full projects portfolio →</a>
-      </p>
-    </section>
-
-    <section>
       <h2>Non-technical Accomplishments</h2>
-        <ul>
-          <li>Apollo Fellowship Recipient ($10k Award) for Ranking in the Top 20 Global U20 Debaters</li>
-          <li>Open Philanthropy Cause Exploration Winner (€500 Award) for Cost-Effectiveness Research</li>
-          <li>Alberta Provincial Debate 4x Champion, 7x Medalist, and Current Record Holder</li>
-        </ul>
-      </div>
+      <ul>
+        <li>Apollo Fellowship Recipient ($10k Award) for Ranking in the Top 20 Global U20 Debaters</li>
+        <li>Open Philanthropy Cause Exploration Winner (€500 Award) for Cost-Effectiveness Research</li>
+        <li>Alberta Provincial Debate 4x Champion, 7x Medalist, and Current Record Holder</li>
+      </ul>
     </section>
   </div>
 </body>
