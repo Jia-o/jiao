@@ -105,14 +105,13 @@
     }
     
     header {
+      font-family: "Segoe UI", system-ui, sans-serif;
       margin-bottom: 3.5rem;
       padding: 2.5rem 2rem;
       background: rgba(255, 255, 255, 0.85);
       border-radius: 32px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
       backdrop-filter: blur(6px);
-
-      /* Center the content */
       text-align: center;
     }
     header h1 {
@@ -241,8 +240,8 @@
     
     nav {
       display: flex;
-      gap: 5px;
-      margin-top: 10px;
+      gap: 1px;
+      margin-top: 12px;
     }
 
     .nav-btn {
@@ -254,6 +253,10 @@
       border-radius: 12px; 
       transition: background-color 0.3s, transform 0.2s;
     }
+    
+    .nav-btn:first-child {
+        margin-right: -2px;
+      }
 
     .nav-btn:hover {
       background-color: rgba(95, 44, 130, 0.8); 
@@ -288,11 +291,14 @@
     <section class="about">
       <h2>About Me</h2>
       <p>
-        I’m a Cognitive Science major at Carnegie Mellon University graduating in 2028. My projects have:
+        I’m a Cognitive Science major at Carnegie Mellon University graduating in 2028.
+      </p>
+      <p>
+        My projects have:
       </p>
       <ul>
         <li>Received Berkeley StEP ($10k) and Microsoft for AI ($20k) grants</li>
-        <li>Won the Most Significant Sustainability Innovation Award at Tartanhacks</li>
+        <li>Won the Most Significant Sustainability Innovation Award at TartanHacks</li>
         <li>Been adopted into 5+ hospitals and helplines around North America</li>
       </ul>
       <p style="margin-top:1rem;">
