@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Reading Jar</title>
   <style>
-    /* --- MAGIC JAR CSS --- */
+    /* --- BACKGROUND & CANVAS --- */
     #bgCanvas {
       position: fixed;
       top: 0;
@@ -29,9 +29,42 @@
       overflow: hidden;
     }
 
+    /* --- NAVIGATION --- */
+    nav {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 100;
+    }
+
+    .nav-btn {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .nav-btn[href="reading.html"] {
+      background: rgba(99, 102, 241, 0.3);
+      border-color: rgba(165, 243, 252, 0.5);
+    }
+
+    /* --- SCENE & CONTROLS --- */
     .scene { position: relative; text-align: center; z-index: 10; display: flex; flex-direction: column; align-items: center; }
 
-    /* UI Controls Styling */
     .controls { margin-bottom: 30px; display: flex; gap: 10px; align-items: center; }
     
     select {
@@ -42,10 +75,26 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(5px);
       outline: none;
+      cursor: pointer;
     }
     
-    select option { background: #1e1b4b; }
+    select option { background: #1e1b4b; color: white; }
 
+    button#drawBtn {
+      padding: 12px 28px;
+      border-radius: 16px;
+      border: none;
+      background: linear-gradient(to right, #ec4899, #6366f1);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      transition: all 0.2s;
+    }
+
+    button:disabled { opacity: 0.5; cursor: wait; filter: grayscale(1); }
+
+    /* --- THE JAR --- */
     .jar-wrapper { position: relative; width: 220px; height: 340px; }
 
     .jar {
@@ -63,7 +112,7 @@
 
     .neck {
       position: absolute;
-      top: 48px; /* Adjusted for jar height */
+      top: 48px;
       left: 50%;
       transform: translateX(-50%);
       width: 110px;
@@ -87,7 +136,7 @@
       z-index: 4;
     }
 
-    .lid.open { transform: translate(-50%, -60px) rotate(-20deg); opacity: 0.5; }
+    .lid.open { transform: translate(-50%, -60px) rotate(-20deg); opacity: 0; }
 
     .shake { animation: shake 0.6s ease-in-out infinite; }
     @keyframes shake {
@@ -96,7 +145,7 @@
       75% { transform: rotate(3deg); }
     }
 
-    /* Paper Styling */
+    /* --- THE PAPER --- */
     .paper {
         position: absolute;
         left: 50%;
@@ -114,9 +163,10 @@
         opacity: 0;
         box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         z-index: 5;
-        padding: 15px;
+        padding: 20px;
         box-sizing: border-box;
         transition: opacity 0.3s;
+        text-align: center;
     }
 
     .paper.fly {
@@ -129,66 +179,48 @@
         60% { transform: translate(-50%, -240px) scale(0.6) rotate(0deg); }
         100% {
             transform: translate(-50%, -280px) scale(1);
-            width: 240px;
+            width: 260px;
             height: auto;
-            min-height: 100px;
+            min-height: 120px;
         }
     }
+
+    .paper span { font-weight: 600; color: #0f172a; margin-bottom: 10px; display: block; }
 
     .paper a {
       color: #6366f1;
       text-decoration: none;
       font-weight: bold;
-      word-break: break-all;
       font-size: 14px;
-      margin-top: 8px;
+      padding: 8px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      transition: background 0.2s;
     }
 
-    button:disabled { filter: grayscale(1); cursor: wait; }
+    .paper a:hover { background: #f8fafc; }
 
-    /* --- Navigation Styling --- */
-    nav {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: flex;
-    gap: 15px;
-    z-index: 100; /* Ensure it stays above the star background */
-    }
-
-    .nav-btn {
-    text-decoration: none;
-    color: rgba(255, 255, 255, 0.8);
-    background: rgba(255, 255, 255, 0.1);
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-    }
-
-    .nav-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
-    }
-
-    /* Optional: Highlight the active page */
-    .nav-btn[href="reading.html"] {
-    background: rgba(99, 102, 241, 0.3); /* Subtle purple glow for the current page */
-    border-color: rgba(165, 243, 252, 0.5);
+    .excuse-btn {
+      margin-top: 15px;
+      padding: 4px 12px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      color: #64748b;
+      font-size: 11px;
+      cursor: pointer;
     }
 
   </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html" class="nav-btn">TLDR About Me</a>
-        <a href="projects.html" class="nav-btn">Technical Projects</a>
-        <a href="reading.html" class="nav-btn">Favourite Reads</a>
-      </nav>
+
+  <nav>
+    <a href="index.html" class="nav-btn">TLDR About Me</a>
+    <a href="projects.html" class="nav-btn">Technical Projects</a>
+    <a href="reading.html" class="nav-btn">Favourite Reads</a>
+  </nav>
+
   <canvas id="bgCanvas"></canvas>
 
   <div class="scene">
@@ -197,9 +229,6 @@
     <div class="controls">
       <select id="vibeSelect">
         <option value="">Any Vibe</option>
-        <option value="tech">Tech</option>
-        <option value="philosophy">Philosophy</option>
-        <option value="scifi">Sci-Fi</option>
       </select>
       <button id="drawBtn" onclick="getReading()">Draw a Link</button>
     </div>
@@ -221,23 +250,37 @@
     const BACKEND_URL = "https://reading-list-backend-a71i.onrender.com";
     let allReadings = [];
 
-    // 1. Fetch all data once when page loads
+    // 1. Initial Load from Backend
     async function initializeJar() {
-        const res = await fetch(`${BACKEND_URL}/get-data`);
-        const data = await res.json();
-        
-        allReadings = data.readings;
-        
-        // 2. Fill the dropdown with tags from your Google Doc
-        const select = document.getElementById('vibeSelect');
-        data.tags.forEach(tag => {
-            const opt = document.createElement('option');
-            opt.value = tag;
-            opt.innerText = tag.charAt(0).toUpperCase() + tag.slice(1);
-            select.appendChild(opt);
-        });
+        try {
+            const res = await fetch(`${BACKEND_URL}/get-data`);
+            const data = await res.json();
+            allReadings = data.readings;
+            
+            const select = document.getElementById('vibeSelect');
+            select.innerHTML = '<option value="">Any Vibe</option>';
+            
+            data.tags.forEach(tag => {
+                const opt = document.createElement('option');
+                opt.value = tag.toLowerCase();
+                opt.innerText = tag.charAt(0).toUpperCase() + tag.slice(1);
+                select.appendChild(opt);
+            });
+            console.log("Jar loaded with", allReadings.length, "items.");
+        } catch (e) {
+            console.error("Failed to load jar data:", e);
+        }
     }
 
+    // 2. Clear Animations
+    function resetJar() {
+        const paper = document.getElementById('paper');
+        const lid = document.getElementById('lid');
+        paper.classList.remove('fly');
+        lid.classList.remove('open');
+    }
+
+    // 3. Logic to Draw Paper
     async function getReading() {
         const btn = document.getElementById('drawBtn');
         const jar = document.getElementById('jarWrapper');
@@ -245,35 +288,77 @@
         const paper = document.getElementById('paper');
         const vibe = document.getElementById('vibeSelect').value;
 
+        // Reset if paper is already out
+        resetJar();
+        
         btn.disabled = true;
         jar.classList.add('shake');
         
-        // Filter locally for speed
+        // Filter locally
         let filtered = allReadings;
         if (vibe) {
             filtered = allReadings.filter(r => r.themes.includes(vibe));
         }
 
-        // Artificial delay to let the jar shake (looks better!)
+        // Delay for the shake effect
         setTimeout(() => {
             jar.classList.remove('shake');
-            lid.classList.add('open');
             
             if(filtered.length > 0) {
                 const pick = filtered[Math.floor(Math.random() * filtered.length)];
+                
                 document.getElementById('paperContent').innerText = pick.title;
-                document.getElementById('paperLink').href = pick.url;
-                document.getElementById('paperLink').style.display = "block";
+                document.getElementById('paperLink').href = pick.url || "#";
+                document.getElementById('paperLink').style.display = pick.url ? "inline-block" : "none";
+                
+                lid.classList.add('open');
+                paper.classList.add('fly');
             } else {
-                document.getElementById('paperContent').innerText = "Nothing found!";
+                alert("The jar has no articles for this vibe!");
             }
-            paper.classList.add('fly');
             btn.disabled = false;
-        }, 1000);
+        }, 800);
     }
 
-    // Start the app
-    initializeJar();
+    // --- Starry Background Logic ---
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function initStars() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      stars = [];
+      for(let i=0; i<150; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 1.5,
+          opacity: Math.random(),
+          speed: 0.05 + Math.random() * 0.1
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.opacity})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+        ctx.fill();
+        s.y -= s.speed;
+        if(s.y < 0) s.y = canvas.height;
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    window.addEventListener('resize', initStars);
+    initStars();
+    drawStars();
+
+    // Start fetching data
+    window.onload = initializeJar;
   </script>
 </body>
 </html>
