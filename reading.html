@@ -219,87 +219,61 @@
 
   <script>
     const BACKEND_URL = "https://reading-list-backend-a71i.onrender.com";
-    
-    async function getReading() {
-      const btn = document.getElementById('drawBtn');
-      const jar = document.getElementById('jarWrapper');
-      const lid = document.getElementById('lid');
-      const paper = document.getElementById('paper');
-      const vibe = document.getElementById('vibeSelect').value;
+    let allReadings = [];
 
-      // 1. Start UI feedback
-      btn.disabled = true;
-      jar.classList.add('shake');
-      paper.classList.remove('fly'); // Reset paper if it was out
-      
-      try {
-        const res = await fetch(`${BACKEND_URL}/get-link?vibe=${vibe}`);
+    // 1. Fetch all data once when page loads
+    async function initializeJar() {
+        const res = await fetch(`${BACKEND_URL}/get-data`);
         const data = await res.json();
-
-        // 2. Animate Opening
-        jar.classList.remove('shake');
-        lid.classList.add('open');
         
-        if(data.url) {
-          document.getElementById('paperContent').innerText = data.title || "Found a match!";
-          document.getElementById('paperLink').href = data.url;
-          document.getElementById('paperLink').style.display = "block";
-        } else {
-          document.getElementById('paperContent').innerText = "Jar is empty for this vibe!";
-          document.getElementById('paperLink').style.display = "none";
+        allReadings = data.readings;
+        
+        // 2. Fill the dropdown with tags from your Google Doc
+        const select = document.getElementById('vibeSelect');
+        data.tags.forEach(tag => {
+            const opt = document.createElement('option');
+            opt.value = tag;
+            opt.innerText = tag.charAt(0).toUpperCase() + tag.slice(1);
+            select.appendChild(opt);
+        });
+    }
+
+    async function getReading() {
+        const btn = document.getElementById('drawBtn');
+        const jar = document.getElementById('jarWrapper');
+        const lid = document.getElementById('lid');
+        const paper = document.getElementById('paper');
+        const vibe = document.getElementById('vibeSelect').value;
+
+        btn.disabled = true;
+        jar.classList.add('shake');
+        
+        // Filter locally for speed
+        let filtered = allReadings;
+        if (vibe) {
+            filtered = allReadings.filter(r => r.themes.includes(vibe));
         }
 
-        // 3. Fly the paper out
-        paper.classList.add('fly');
-
-      } catch (err) {
-        alert("The jar is stuck! (Check console for error)");
-        jar.classList.remove('shake');
-      } finally {
-        btn.disabled = false;
-      }
+        // Artificial delay to let the jar shake (looks better!)
+        setTimeout(() => {
+            jar.classList.remove('shake');
+            lid.classList.add('open');
+            
+            if(filtered.length > 0) {
+                const pick = filtered[Math.floor(Math.random() * filtered.length)];
+                document.getElementById('paperContent').innerText = pick.title;
+                document.getElementById('paperLink').href = pick.url;
+                document.getElementById('paperLink').style.display = "block";
+            } else {
+                document.getElementById('paperContent').innerText = "Nothing found!";
+            }
+            paper.classList.add('fly');
+            btn.disabled = false;
+        }, 1000);
     }
 
-    function resetJar() {
-      document.getElementById('paper').classList.remove('fly');
-      document.getElementById('lid').classList.remove('open');
-    }
-
-    // --- Simple Star Background ---
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-
-    function initStars() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      stars = [];
-      for(let i=0; i<100; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 2,
-          speed: Math.random() * 0.5
-        });
-      }
-    }
-
-    function drawStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "white";
-      stars.forEach(s => {
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
-        ctx.fill();
-        s.y -= s.speed;
-        if(s.y < 0) s.y = canvas.height;
-      });
-      requestAnimationFrame(drawStars);
-    }
-
-    window.addEventListener('resize', initStars);
-    initStars();
-    drawStars();
+    // Start the app
+    initializeJar();
   </script>
 </body>
 </html>
