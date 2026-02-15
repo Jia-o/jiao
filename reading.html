@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Vibe Reader</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding-top: 50px; background: #fafafa; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; border-radius: 8px; border: 1px solid #ddd; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Pick a Vibe</h1>
+    <select id="vibeSelect">
+        <option value="">Random</option>
+        <option value="tech">Tech</option>
+        <option value="philosophy">Philosophy</option>
+    </select>
+    <button onclick="getReading()">Get Article</button>
+
+    <div id="result"></div>
+
+    <script>
+        const BACKEND_URL = "https://reading-list-backend-a71i.onrender.com";
+
+        async function getReading() {
+            const vibe = document.getElementById('vibeSelect').value;
+            const res = await fetch(`${BACKEND_URL}/get-link?vibe=${vibe}`);
+            const data = await res.json();
+            
+            if(data.url) {
+                document.getElementById('result').innerHTML = `<a href="${data.url}" target="_blank">Read this article</a>`;
+            } else {
+                document.getElementById('result').innerText = "Nothing found for that vibe.";
+            }
+        }
+    </script>
+</body>
+</html>
