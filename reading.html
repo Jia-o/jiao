@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Reading Jar</title>
+  <title>Reading Jar</title>
   <style>
     /* --- BACKGROUND & CANVAS --- */
     #bgCanvas {
@@ -224,13 +224,13 @@
   <canvas id="bgCanvas"></canvas>
 
   <div class="scene">
-    <h1>Magic Reading Jar</h1>
+    <h1>Jiao's Jar</h1>
     
     <div class="controls">
       <select id="vibeSelect">
-        <option value="">Any Vibe</option>
+        <option value="">Random</option>
       </select>
-      <button id="drawBtn" onclick="getReading()">Draw a Link</button>
+      <button id="drawBtn" onclick="getReading()">Get a Reading</button>
     </div>
 
     <div class="jar-wrapper" id="jarWrapper">
@@ -240,7 +240,7 @@
       
       <div class="paper" id="paper">
         <span id="paperContent">Fetching...</span>
-        <a id="paperLink" href="#" target="_blank">Read Article →</a>
+        <a id="paperLink" href="#" target="_blank">Read it! →</a>
         <button class="excuse-btn" onclick="resetJar()">Put it back</button>
       </div>
     </div>
@@ -314,7 +314,7 @@
                 lid.classList.add('open');
                 paper.classList.add('fly');
             } else {
-                alert("The jar has no articles for this vibe!");
+                alert("no favourite reads about this topic :c");
             }
             btn.disabled = false;
         }, 800);
