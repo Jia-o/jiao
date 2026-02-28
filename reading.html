@@ -258,7 +258,35 @@
       font-size: 11px;
       cursor: pointer;
     }
+    #deploymentNote {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 45px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.8);
+      font-family: sans-serif;
+      font-size: 14px;
+      z-index: 100;
+      pointer-events: auto; /* Ensures the link is clickable */
+    }
 
+    #deploymentNote a {
+      color: #6366f1; /* Matching your Indigo theme */
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    #deploymentNote a:hover {
+      text-decoration: underline;
+      color: #a855f7;
+    }
   </style>
 </head>
 <body>
@@ -411,5 +439,8 @@
     // Start fetching data
     window.onload = initializeJar;
   </script>
+  <div id="deploymentNote">
+    Try it in: <a href="https://jia-o.github.io/library/" target="_blank"> 3D →</a>
+  </div>
 </body>
 </html>
