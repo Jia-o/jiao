@@ -69,7 +69,7 @@
     }
   
     .plane {
-      position: absolute;
+      position: fixed;
       top: 40%;
       width: 0;
       height: 0;
@@ -79,8 +79,50 @@
       filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.25));
       animation: fly 10s ease-in-out infinite;
       transform-origin: center;
+      z-index: 0; 
+      /* transition: transform 0.1s linear; */
+      pointer-events: none;
+    }
+
+    .do-roll {
+      z-index: 9999 !important;
+      animation: fly 10s ease-in-out infinite, barrel-roll 1.5s ease-in-out !important;
+    }
+
+    @keyframes barrel-roll {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   
+    .barrel-roll-fab {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(220, 220, 220, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10000; /* Button is always on top */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .barrel-roll-fab:hover {
+      transform: scale(1.1) rotate(15deg);
+    }
+
+    .barrel-roll-fab:active {
+      transform: scale(0.9);
+    }
+
     .plane::after {
       content: "";
       position: absolute;
@@ -136,6 +178,7 @@
     }
 
     .container {
+      font-family: "Segoe UI", system-ui, sans-serif;
       max-width: 900px;
       margin: 0 auto;
       padding: 3rem 1.5rem 4rem;
@@ -151,10 +194,12 @@
       font-family: "Segoe UI", system-ui, sans-serif;
       margin-bottom: 3.5rem;
       padding: 2.5rem 2rem;
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(220, 220, 220, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px); 
+      border: 1px solid rgba(255, 255, 255, 0.2); 
       border-radius: 32px;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(6px);
       text-align: center;
     }
     header h1 {
@@ -170,11 +215,13 @@
       color: #777;
     }
 
-
     section {
       margin-bottom: 3rem;
-      background: rgba(255, 255, 255, 0.85);
       padding: 2.5rem 2rem;
+      background: rgba(220, 220, 220, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 28px;
       box-shadow: 0 18px 36px rgba(0, 0, 0, 0.05);
     }
@@ -201,9 +248,11 @@
     .project-card {
       border-radius: 26px;
       padding: 1.75rem 1.5rem;
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
     }
 
     .project-card:hover {
@@ -302,15 +351,26 @@
       transform: scale(1.05); 
     }
 
+    .do-roll {
+      /* This overrides the 'fly' animation's transform temporarily */
+      animation: fly 10s ease-in-out infinite, barrel-roll 0.8s linear !important;
+    }
+
+    @keyframes barrel-roll {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
   </style>
 </head>
 
 <body>
 
   <div class="background">
-    <div class="plane"></div>
     <div class="horizon"></div>
   </div>
+  <div class="plane"></div>
+  <button class="barrel-roll-fab" onclick="doBarrelRoll()">✈️</button>
 
   <!-- Navigation -->
   <nav>
@@ -319,12 +379,11 @@
     <a href="reading.html" class="nav-btn">Jiao's Jar</a>
   </nav>  
 
-  <!-- Main container -->
   <div class="container">
     <header>
       <h1>Jiao Deng</h1>
       <p>
-        <a href="mailto:jiaod@andrew.cmu.edu">jiaod@andrew.cmu.edu</a>
+        <a>jiaod@andrew.cmu.edu</a> | https://github.com/Jia-o
       </p>
     </header>
 
@@ -384,5 +443,16 @@
       </ul>
     </section>
   </div>
+
+  <script>
+    function doBarrelRoll() {
+      const plane = document.querySelector('.plane');
+      if (plane.classList.contains('do-roll')) return;
+      plane.classList.add('do-roll');
+      setTimeout(() => {
+        plane.classList.remove('do-roll');
+      }, 800);
+    }
+  </script>
 </body>
 </html>
