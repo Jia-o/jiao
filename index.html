@@ -10,7 +10,7 @@
       padding: 0;
       box-sizing: border-box;
     }
-  
+
     .background {
       position: fixed;
       inset: 0;
@@ -18,14 +18,13 @@
       overflow: hidden;
       background: linear-gradient(
         to bottom,
-        #e09a3c 0%,   /* darker #ffb347 */
-        #e36a4d 40%,  /* darker #ff7e5f */
-        #b85a63 70%,  /* darker #d66d75 */
-        #4b1f68 100%  /* darker #5f2c82 */
+        #e09a3c 0%,
+        #e36a4d 40%,
+        #b85a63 70%,
+        #4b1f68 100%
       );
     }
-  
-    /* ⭐ STAR LAYERS */
+
     .background::before,
     .background::after {
       content: "";
@@ -35,8 +34,7 @@
       animation: twinkle 6s infinite ease-in-out alternate;
       pointer-events: none;
     }
-  
-    /* Small distant stars */
+
     .background::before {
       background-image:
         radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8), transparent),
@@ -46,8 +44,7 @@
       background-size: 200px 200px;
       animation-duration: 7s;
     }
-  
-    /* Slightly brighter stars */
+
     .background::after {
       background-image:
         radial-gradient(1.5px 1.5px at 10% 50%, rgba(255,255,255,0.9), transparent),
@@ -56,44 +53,52 @@
       background-size: 300px 300px;
       animation-duration: 5s;
     }
-  
+
     @keyframes twinkle {
-      0% {
-        opacity: 0.6;
-        transform: scale(1);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1.05);
-      }
+      0%   { opacity: 0.6; transform: scale(1); }
+      100% { opacity: 1;   transform: scale(1.05); }
     }
-  
+
+    .horizon {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 25%;
+      background: linear-gradient(to top, rgba(0,0,0,0.35), transparent);
+    }
+
+    /* ✈ Paper plane */
     .plane {
       position: fixed;
       top: 40%;
-      width: 0;
-      height: 0;
-      border-top: 18px solid transparent;
-      border-bottom: 18px solid transparent;
-      border-left: 90px solid #f5f5f5;
+      width: 90px;
+      height: 40px;
       filter: drop-shadow(2px 3px 4px rgba(0,0,0,0.25));
       animation: fly 10s ease-in-out infinite;
       transform-origin: center;
-      z-index: 0; 
-      /* transition: transform 0.1s linear; */
+      z-index: 0;
       pointer-events: none;
     }
 
     .do-roll {
       z-index: 9999 !important;
-      animation: fly 10s ease-in-out infinite, barrel-roll 1.5s ease-in-out !important;
+      animation: fly 10s ease-in-out infinite, barrel-roll 0.8s linear !important;
     }
 
     @keyframes barrel-roll {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
-  
+
+    @keyframes fly {
+      0%   { left: -200px;              transform: scaleX(1)  translateY(0)    rotate(6deg);  }
+      40%  { left: calc(100% + 200px);  transform: scaleX(1)  translateY(-40px) rotate(-6deg); }
+      50%  { left: calc(100% + 200px);  transform: scaleX(-1); }
+      90%  { left: -200px;              transform: scaleX(-1) translateY(20px)  rotate(6deg);  }
+      100% { left: -200px;              transform: scaleX(1)  translateY(0)    rotate(6deg);  }
+    }
+
+    /* Barrel-roll FAB */
     .barrel-roll-fab {
       position: fixed;
       bottom: 30px;
@@ -107,7 +112,7 @@
       border: 1px solid rgba(255, 255, 255, 0.3);
       font-size: 24px;
       cursor: pointer;
-      z-index: 10000; /* Button is always on top */
+      z-index: 10000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -115,252 +120,170 @@
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    .barrel-roll-fab:hover {
-      transform: scale(1.1) rotate(15deg);
-    }
+    .barrel-roll-fab:hover  { transform: scale(1.1) rotate(15deg); }
+    .barrel-roll-fab:active { transform: scale(0.9); }
 
-    .barrel-roll-fab:active {
-      transform: scale(0.9);
-    }
-
-    .plane::after {
-      content: "";
-      position: absolute;
-      top: -18px;
-      left: -90px;
-      width: 0;
-      height: 0;
-      border-top: 18px solid transparent;
-      border-bottom: 18px solid transparent;
-      border-left: 45px solid #e0e0e0;
-    }
-  
-    @keyframes fly {
-      0% {
-        left: -200px;
-        transform: scaleX(1) translateY(0) rotate(6deg);
-      }
-      40% {
-        left: calc(100% + 200px);
-        transform: scaleX(1) translateY(-40px) rotate(-6deg);
-      }
-      50% {
-        left: calc(100% + 200px);
-        transform: scaleX(-1);
-      }
-      90% {
-        left: -200px;
-        transform: scaleX(-1) translateY(20px) rotate(6deg);
-      }
-      100% {
-        left: -200px;
-        transform: scaleX(1) translateY(0) rotate(6deg);
-      }
-    }
-  
-    .horizon {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 25%;
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.35),
-        transparent
-      );
-    }
-
-    body {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      line-height: 1.7;
-      color: #3b3b3b;
-      background: transparent;
-    }
-
-    .container {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem 4rem;
-    }
-
-    nav a {
-      color: #5f5bd6;
-      text-decoration: none;
-      margin: 0 6px;
-    }
-    
-    header {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      margin-bottom: 3.5rem;
-      padding: 2.5rem 2rem;
-      background: rgba(220, 220, 220, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px); 
-      border: 1px solid rgba(255, 255, 255, 0.2); 
-      border-radius: 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-      text-align: center;
-    }
-    header h1 {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 2.6rem; /* original size */
-      margin-bottom: 0.75rem;
-      font-weight: 500;
-    }
-
-    header p {
-      font-family: "Segoe UI", system-ui, sans-serif;
-      font-size: 1.1rem; /* original size */
-      color: #777;
-    }
-
-    section {
-      margin-bottom: 3rem;
-      padding: 2.5rem 2rem;
-      background: rgba(220, 220, 220, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 28px;
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.05);
-    }
-
-    section h2 {
-      font-size: 1.9rem;
-      margin-bottom: 1.2rem;
-      font-weight: 500;
-    }
-
-    .about p {
-      font-size: 1.05rem;
-      color: #4a4a4a;
-      max-width: 70ch;
-    }
-
-    .projects-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-
-    .project-card {
-      border-radius: 26px;
-      padding: 1.75rem 1.5rem;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.06);
-    }
-
-    .project-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
-    }
-
-    .project-card h3 {
-      margin-bottom: 0.6rem;
-      font-size: 1.25rem;
-      font-weight: 500;
-    }
-
-    .project-card p {
-      font-size: 0.95rem;
-      color: #555;
-      margin-bottom: 1rem;
-    }
-
-    .project-card a {
-      display: inline-block;
-      padding: 0.5rem 1.1rem;
-      border-radius: 999px;
-      font-size: 0.9rem;
-      color: #5f5bd6;
-      background-color: #ffffff;
-      text-decoration: none;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-    }
-
-    .project-card a:hover {
-      background-color: #f5f3ff;
-    }
-
-    .project-summary {
-      transition: opacity 0.3s ease;
-    }
-
-    .project-details {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 0.4s ease, opacity 0.3s ease;
-    }
-
-    .project-card.open .project-details {
-      max-height: 300px;
-      opacity: 1;
-      margin-top: 1rem;
-    }
-
-    .project-card.open .project-summary {
-      opacity: 0.6;
-    }
-
-    section ul {
-      padding-left: 2.4rem;
-    }
-
-    .awards-wrapper {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .awards-column {
-      flex: 1;
-      min-width: 240px;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #888;
-      margin-top: 3rem;
-    }
-  
+    /* Nav — top-right fixed */
     nav {
+      position: fixed;
+      top: 16px;
+      right: 16px;
       display: flex;
-      gap: 1px;
-      margin-top: 12px;
+      gap: 6px;
+      z-index: 100;
     }
 
     .nav-btn {
       text-decoration: none;
       color: #fff;
-      background-color: rgba(95, 44, 130, 0.6); 
-      padding: 2px 6px; 
-      font-size: 18px; 
-      border-radius: 12px; 
+      background-color: rgba(95, 44, 130, 0.6);
+      padding: 5px 12px;
+      font-size: 15px;
+      border-radius: 12px;
       transition: background-color 0.3s, transform 0.2s;
     }
 
     .nav-btn:hover {
-      background-color: rgba(95, 44, 130, 0.8); 
-      transform: scale(1.05); 
+      background-color: rgba(95, 44, 130, 0.85);
+      transform: scale(1.05);
     }
 
-    .do-roll {
-      /* This overrides the 'fly' animation's transform temporarily */
-      animation: fly 10s ease-in-out infinite, barrel-roll 0.8s linear !important;
+    /* Layout */
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.9);
+      background: transparent;
     }
 
-    @keyframes barrel-roll {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 1.5rem 5rem;
     }
 
+    /* Header — no frosted glass */
+    header {
+      margin-bottom: 3.5rem;
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 500;
+      color: #fff;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+      margin-bottom: 0.6rem;
+    }
+
+    header p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    header a {
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+    }
+
+    /* Sections — no frosted glass */
+    section {
+      margin-bottom: 3.5rem;
+      padding: 0 0.25rem;
+    }
+
+    section h2 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: #fff;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* About */
+    .about p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 70ch;
+      margin-bottom: 0.75rem;
+    }
+
+    .about ul {
+      padding-left: 1.5rem;
+      margin: 0.75rem 0 1rem;
+    }
+
+    .about li {
+      color: rgba(255, 255, 255, 0.82);
+      margin-bottom: 0.3rem;
+    }
+
+    .about a {
+      color: rgba(255, 210, 160, 0.95);
+      text-decoration: none;
+    }
+
+    .about a:hover {
+      text-decoration: underline;
+    }
+
+    /* Experience */
+    .experience-entry {
+      display: flex;
+      gap: 1.1rem;
+      align-items: flex-start;
+      margin-bottom: 1.75rem;
+    }
+
+    .exp-logo {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .exp-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .exp-content h3 {
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 0.15rem;
+    }
+
+    .exp-meta {
+      font-size: 0.87rem;
+      color: rgba(255, 255, 255, 0.58);
+      margin-bottom: 0.45rem;
+    }
+
+    .exp-content ul {
+      padding-left: 1.2rem;
+    }
+
+    .exp-content li {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.45);
+      margin-top: 3rem;
+    }
   </style>
 </head>
 
@@ -369,79 +292,97 @@
   <div class="background">
     <div class="horizon"></div>
   </div>
-  <div class="plane"></div>
+
+  <!-- Paper plane (CSS/SVG, no image) -->
+  <div class="plane">
+    <svg viewBox="0 0 90 40" xmlns="http://www.w3.org/2000/svg" width="90" height="40">
+      <!-- Upper wing surface -->
+      <polygon points="90,20 0,2 28,20"  fill="rgba(245,245,245,0.95)"/>
+      <!-- Lower fold -->
+      <polygon points="90,20 0,38 28,20" fill="rgba(205,205,205,0.85)"/>
+      <!-- Tail panel between trailing edges -->
+      <polygon points="0,2 0,38 28,20"   fill="rgba(228,228,228,0.90)"/>
+      <!-- Center crease -->
+      <line x1="28" y1="20" x2="90" y2="20" stroke="rgba(170,170,170,0.45)" stroke-width="0.8"/>
+    </svg>
+  </div>
+
   <button class="barrel-roll-fab" onclick="doBarrelRoll()">✈️</button>
 
-  <!-- Navigation -->
   <nav>
-    <a href="index.html" class="nav-btn">About Me</a>
+    <a href="index.html"    class="nav-btn">About Me</a>
     <a href="projects.html" class="nav-btn">Projects</a>
-    <a href="reading.html" class="nav-btn">Jiao's Jar</a>
-  </nav>  
+    <a href="reading.html"  class="nav-btn">Jiao's Jar</a>
+    <a href="landbank.html" class="nav-btn">Land Bank</a>
+  </nav>
 
   <div class="container">
+
     <header>
       <h1>Jiao Deng</h1>
-      <p>
-        <a>jiaod@andrew.cmu.edu</a> | https://github.com/Jia-o
-      </p>
+      <p><a href="mailto:jiaod@andrew.cmu.edu">jiaod@andrew.cmu.edu</a> &nbsp;·&nbsp; <a href="https://github.com/Jia-o">github.com/Jia-o</a></p>
     </header>
 
     <section class="about">
       <h2>About Me</h2>
-      <p>
-        I'm a Cognitive Science major at Carnegie Mellon University graduating in 2028
-      </p>
-      <p>
-        My projects have:
-      </p>
+      <p>Hi! I'm a Cognitive Science and AI student at Carnegie Mellon University. I have:</p>
       <ul>
         <li>Received Berkeley StEP ($10k) and Microsoft for AI ($20k) grants</li>
         <li>Won the Most Significant Sustainability Innovation Award at TartanHacks</li>
-        <li>Been adopted into 5+ hospitals and helplines around North America</li>
+        <li>Created projects that were adopted into 5+ hospitals and helplines around North America</li>
+        <li>Won a record 4x Alberta Provincial Debate Championships and recieved the Apollo Fellowship ($10k)</li>
       </ul>
-      <p style="margin-top:1rem;">
-        <a href="projects.html">View full projects portfolio →</a>
-      </p>
+      <p><a href="projects.html">View full projects portfolio →</a></p>
     </section>
-    
+
     <section>
       <h2>Experience</h2>
 
-      <h3>Computer Science Teaching Assistant (CMU)</h3>
-      <p><em>June 2025 - Present</em></p>
-      <ul>
-        <li>Created educational content and supported students on large coding projects</li>
-      </ul>
+      <!-- <div class="experience-entry">
+        <div class="exp-logo"><img src="assets/experiences/forge.jpg" alt="Community Forge logo" /></div>
+        <div class="exp-content">
+          <h3>Software Engineer</h3>
+          <p class="exp-meta">Community Forge &nbsp;·&nbsp; August 2026 – Present</p>
+          <ul>
+            <li>was cool :)</li>
+          </ul>
+        </div>
+      </div> -->
 
-      <h3>Product Design Intern (Vinora AI)</h3>
-      <p><em>Dec 2024 - Apr 2025</em></p>
-      <ul>
-        <li>Built user interface using JavaScript and Python for AI workflow visualization</li>
-      </ul>
+      <div class="experience-entry">
+        <div class="exp-logo"><img src="assets/experiences/wilkinsburg.png" alt="Wilkinsburg Land Bank logo" /></div>
+        <div class="exp-content">
+          <h3>Data Analyst Intern</h3>
+          <p class="exp-meta">Wilkinsburg Land Bank &nbsp;·&nbsp; May 2026 – August 2026</p>
+          <ul>
+            <li>Developed mapping tools for hypothesis-driven analysis and decision-making.</li>
+          </ul>
+        </div>
+      </div>
 
-      <h3>Data Analyst (Baker Industries)</h3>
-      <p><em>Oct 2024 - Apr 2025</em></p>
-      <ul>
-        <li>Analyzed survey data with Python and R to evaluate rehabilitation programs</li>
-      </ul>
+      <div class="experience-entry">
+        <div class="exp-logo"><img src="assets/experiences/cmu.png" alt="CMU logo" /></div>
+        <div class="exp-content">
+          <h3>Computer Science Teaching Assistant</h3>
+          <p class="exp-meta">CMU School of Computer Science &nbsp;·&nbsp; June 2025 – Present</p>
+          <ul>
+            <li>Head TA for the highest-enrollment course at CMU and one of the top CS courses nationwide</li>
+          </ul>
+        </div>
+      </div>
 
-      <h3>Nanotechnology Developer (Stanford Department of Psychology)</h3>
-      <p><em>Aug 2023 - Aug 2024</em></p>
-      <ul>
-        <li>Prototyped nanobots for opioid relapse detection</li>
-      </ul>
+      <div class="experience-entry">
+        <div class="exp-logo"><img src="assets/experiences/stanford.png" alt="Stanford Department of Psychology logo" /></div>
+        <div class="exp-content">
+          <h3>Nanotechnology Developer</h3>
+          <p class="exp-meta">Stanford Department of Psychology &nbsp;·&nbsp; Aug 2023 – Aug 2024</p>
+          <ul>
+            <li>Prototyped nanobots for opioid relapse detection</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <h2>Non-technical Accomplishments</h2>
-      <ul>
-        <li>Apollo Fellowship Recipient ($10k Award) for Ranking in the Top 20 Global U20 Debaters</li>
-        <li>Open Philanthropy Cause Exploration Winner (€500 Award) for Cost-Effectiveness Research</li>
-        <li>Distress Centres Calgary Hotline Worker of the Year</li>
-        <li>Alberta Provincial Debate 4x Champion, 7x Medalist</li>
-      </ul>
-    </section>
   </div>
 
   <script>
@@ -449,9 +390,7 @@
       const plane = document.querySelector('.plane');
       if (plane.classList.contains('do-roll')) return;
       plane.classList.add('do-roll');
-      setTimeout(() => {
-        plane.classList.remove('do-roll');
-      }, 800);
+      setTimeout(() => { plane.classList.remove('do-roll'); }, 800);
     }
   </script>
 </body>
