@@ -333,6 +333,17 @@
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
             allReadings = data.readings;
+
+            const select = document.getElementById('vibeSelect');
+            select.innerHTML = '<option value="">Random</option>';
+
+            data.tags.forEach(tag => {
+                const opt = document.createElement('option');
+                opt.value = tag.toLowerCase();
+                opt.innerText = tag.charAt(0).toUpperCase() + tag.slice(1);
+                select.appendChild(opt);
+            });
+            console.log("Jar loaded with", allReadings.length, "items.");
         } catch (e) {
             console.error("Failed to load jar data:", e);
         }
